@@ -2,18 +2,24 @@
   "parser": "babel-eslint",
   "extends": [
     "airbnb-base",
-    "plugin:flowtype/recommended"
+    "plugin:flowtype/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react"
   ],
   "plugins": [
+    "react",
+    "react-native",
+    "jsx-a11y",
+    "import",
     "flowtype",
     "flowtype-errors"
   ],
   "env": {
+    "browser": true,
+    "node": true,
     "jest": true
   },
   "rules": {
-    "semi": [2, "never"],
-    "comma-dangle": [2, "always-multiline"],
-    "flowtype-errors/show-errors": 2
   }
 }

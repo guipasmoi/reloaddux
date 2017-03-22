@@ -15,11 +15,12 @@
     "test": "jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "eslint src test",
+    "lint": "eslint src tests",
     "flow": "flow check",
     "docs": "documentation readme src --section=API",
     "clean": "rimraf dist",
     "prebuild": "npm run docs && npm run clean",
+    "precommit": "lint-staged",
     "build": "babel src -d dist",
     "watch": "npm-watch",
     "patch": "npm version patch && npm publish",
@@ -28,19 +29,26 @@
     "prepublish": "npm run lint && npm test && npm run build",
     "postpublish": "git push origin master --follow-tags"
   },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "testRegex": "(/tests/.*|(\\.|/)(test|spec))\\.jsx?$"
+  },
   "watch": {
     "test": "{src,test}/*.js",
     "lint": "{src,test}/*.js",
     "build": "src"
   },
-  "jest": {
-    "testRegex": "/test/.*",
-    "testEnvironment": "node"
-  },
   "keywords": [
-    "generator-nod"
+    "reloadux"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "babel-preset-react-native": "^1.9.1"
+  },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.1",
@@ -51,13 +59,29 @@
     "documentation": "4.0.0-beta.18",
     "eslint": "^3.14.0",
     "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-config-prettier": "^1.5.0",
     "eslint-plugin-flowtype": "^2.29.2",
     "eslint-plugin-flowtype-errors": "^3.0.0",
     "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.2",
+    "eslint-plugin-react-native": "^2.3.1",
     "flow-bin": "^0.41.0",
+    "husky": "^0.13.2",
     "jest-cli": "^19.0.1",
+    "lint-staged": "^3.4.0",
     "npm-watch": "^0.1.7",
     "opn-cli": "^3.1.0",
+    "prettier": "^0.22.0",
+    "react": "^15.4.2",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.14.3",
     "rimraf": "^2.6.1"
+  },
+  "peerDependencies": {
+    "lodash": "^4.17.4",
+    "react": "^0.14.0 || ^15.0.0-0 || ^16.0.0-0",
+    "redux": "^2.0.0 || ^3.0.0",
+    "redux-saga": "^0.14.3"
   }
 }

@@ -1,10 +1,4 @@
 // @flow
+export { default as withBusiness } from "./withBusiness";
 
-/**
- * This function says hello.
- * @param name Some name to say hello for.
- * @returns The hello.
- */
-const sayHello = (name: string = 'Haz'): string => `Hello, ${name}!`
-
-export default sayHello
+export { default as Store } from "./Store";

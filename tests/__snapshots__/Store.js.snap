@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Store it can create a store 1`] = `
+Store {
+  "dispatch": [Function],
+  "getState": [Function],
+  "reducerManager": ReducerManager {
+    "reducer": [Function],
+    "reducersTreeArray": Array [],
+    "scopeReducerMap": Object {},
+    "trueReducer": [Function],
+  },
+  "replaceReducer": [Function],
+  "run": [Function],
+  "sagaTotasksMap": Array [],
+  "subscribe": [Function],
+  Symbol(Symbol.observable): [Function],
+}
+`;
