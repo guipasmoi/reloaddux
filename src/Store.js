@@ -53,13 +53,13 @@ export default class Store {
   }
 
   registerBusiness(business) {
-    this.reducerManager.addReducersTree(...business.reducersTrees);
+    this.reducerManager.addReducersTrees(...business.reducersTrees);
     business.sagas.forEach(saga =>
       this.sagaTotasksMap.set(saga, this.run(saga)));
   }
 
   unregisterBusiness(business) {
-    this.reducerManager.removeReducersTree(...business.reducersTrees);
+    this.reducerManager.removeReducersTrees(...business.reducersTrees);
     business.sagas.forEach(saga => this.sagaTotasksMap.delete(this.run(saga)));
   }
 }

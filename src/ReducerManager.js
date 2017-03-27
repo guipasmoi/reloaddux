@@ -9,14 +9,14 @@ export default class ReducerManager {
   reducersTreeArray = [];
   trueReducer = state => state;
 
-  addReducersTree(...trees) {
+  addReducersTrees(...trees) {
     this.reducersTreeArray = uniq(this.reducersTreeArray.concat(trees));
     this.trueReducer = combineReducersTree(
       merge({}, ...this.reducersTreeArray)
     );
   }
 
-  removeReducersTree(...trees) {
+  removeReducersTrees(...trees) {
     this.reducersTreeArray = without(this.reducersTreeArray, ...trees);
     this.trueReducer = combineReducersTree(
       merge({}, ...this.reducersTreeArray)

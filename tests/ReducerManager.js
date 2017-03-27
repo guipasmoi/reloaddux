@@ -61,7 +61,7 @@ describe("ReducerManager", () => {
     const reducerManager = new ReducerManager();
     const initState = {};
     let state;
-    reducerManager.addReducersTree(reducersTree);
+    reducerManager.addReducersTrees(reducersTree);
     state = reducerManager.reducer(initState, { type: "ACTION1" });
     expect(state.AwesomeStateForCounter1).toBe(12);
     state = reducerManager.reducer(state, { type: "ACTION1" });
@@ -72,9 +72,9 @@ describe("ReducerManager", () => {
     const reducerManager = new ReducerManager();
     const initState = undefined;
     let state;
-    reducerManager.addReducersTree(reducersTree1);
-    reducerManager.addReducersTree(reducersTree2);
-    reducerManager.addReducersTree(reducersTree3);
+    reducerManager.addReducersTrees(reducersTree1);
+    reducerManager.addReducersTrees(reducersTree2);
+    reducerManager.addReducersTrees(reducersTree3);
     state = reducerManager.reducer(initState, { type: "ACTION1" });
     expect(state).toMatchSnapshot();
     state = reducerManager.reducer(state, { type: "ACTION X" });
@@ -88,10 +88,14 @@ describe("ReducerManager", () => {
     const initState = {};
     let state;
 
-    reducerManager.addReducersTree(reducersTree1, reducersTree2, reducersTree3);
+    reducerManager.addReducersTrees(
+      reducersTree1,
+      reducersTree2,
+      reducersTree3
+    );
     state = reducerManager.reducer(initState, { type: "ACTION1" });
     expect(state).toMatchSnapshot();
-    reducerManager.removeReducersTree(reducersTree1);
+    reducerManager.removeReducersTrees(reducersTree1);
     state = reducerManager.reducer(state, { type: "ACTION1" });
     expect(state).toMatchSnapshot("should not have change after action 1");
   });
