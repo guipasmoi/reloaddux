@@ -5,9 +5,9 @@ import combineReducersTree from "./combineReducersTree";
 
 export default class ReducerManager {
   scopeReducerMap = {};
-  reducer = (action, state) => this.trueReducer(action, state);
+  reducer = (state, action) => this.trueReducer(state, action);
   reducersTreeArray = [];
-  trueReducer = (action, state) => state;
+  trueReducer = (state, action) => state;
 
   addReducersTree(...trees) {
     this.reducersTreeArray = uniq(this.reducersTreeArray.concat(trees));
