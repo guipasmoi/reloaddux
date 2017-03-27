@@ -58,8 +58,14 @@ export default function combineReducersTree(
   // return reversedTree;
   function recursiveProcess(state, action, task) {
     if (isLeaf(task)) {
-      const newState = task.reducer(state, action);
-      return { value: newState, hasChanged: newState !== state };
+      if (
+        task.actions === undefined || task.actions.indexOf(action.type) >= 0
+      ) {
+        const newState = task.reducer(state, action);
+        return { value: newState, hasChanged: newState !== state };
+      } else {
+        return { value: undefined, hasChanged: undefined !== state };
+      }
     } else if (!isPlainObject(task)) {
       // reversedTree (task) must contain only plain object and reducer
       throw new Error("unexpected");
@@ -67,7 +73,7 @@ export default function combineReducersTree(
     const resultValue = Object.entries(task).reduce(
       (accu, [key, subtask]) => {
         const temp = recursiveProcess(
-          isPlainObject(state) ? state[key] : {},
+          isPlainObject(state) ? state[key] : undefined,
           action,
           subtask
         );
@@ -87,14 +93,15 @@ export default function combineReducersTree(
   return (state, action) => {
     let temp = { value: state, hasChanged: false };
     if (!hasBeenInitialized || initAction.type === action.type) {
-      temp = recursiveProcess(state, initAction, tree);
+      temp = recursiveProcess(state, action, tree);
       hasBeenInitialized = true;
+    } else {
+      temp = recursiveProcess(
+        temp.value,
+        action,
+        merge({}, reversedTree[action.type], reversedTree["*"])
+      );
     }
-    temp = recursiveProcess(
-      temp.value,
-      action,
-      merge({}, reversedTree[action.type], reversedTree["*"])
-    );
     return temp.hasChanged ? temp.value : state;
   };
 }
