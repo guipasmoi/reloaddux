@@ -1,4 +1,3 @@
-import React from "react";
 import { withBusiness } from "../src/index";
 
 describe("withBusiness", () => {

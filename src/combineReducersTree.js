@@ -63,9 +63,8 @@ export default function combineReducersTree(
       ) {
         const newState = task.reducer(state, action);
         return { value: newState, hasChanged: newState !== state };
-      } else {
-        return { value: undefined, hasChanged: undefined !== state };
       }
+      return { value: undefined, hasChanged: undefined !== state };
     } else if (!isPlainObject(task)) {
       // reversedTree (task) must contain only plain object and reducer
       throw new Error("unexpected");

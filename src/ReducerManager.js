@@ -7,7 +7,7 @@ export default class ReducerManager {
   scopeReducerMap = {};
   reducer = (state, action) => this.trueReducer(state, action);
   reducersTreeArray = [];
-  trueReducer = (state, action) => state;
+  trueReducer = state => state;
 
   addReducersTree(...trees) {
     this.reducersTreeArray = uniq(this.reducersTreeArray.concat(trees));

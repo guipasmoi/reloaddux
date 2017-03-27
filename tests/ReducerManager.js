@@ -1,14 +1,8 @@
 import ReducerManager from "../src/ReducerManager";
 
-const counter1 = (state = 11, action) => {
-  return state + 1;
-};
-const counter2 = (state = 22, action) => {
-  return state + 2;
-};
-const counter3 = (state = 33, action) => {
-  return state + 3;
-};
+const counter1 = (state = 11) => state + 1;
+const counter2 = (state = 22) => state + 2;
+const counter3 = (state = 33) => state + 3;
 
 const reducersTree = {
   AwesomeStateForCounter1: {
@@ -65,7 +59,7 @@ describe("ReducerManager", () => {
 
   it("it can register a simple tree reducers", () => {
     const reducerManager = new ReducerManager();
-    let initState = {};
+    const initState = {};
     let state;
     reducerManager.addReducersTree(reducersTree);
     state = reducerManager.reducer(initState, { type: "ACTION1" });
@@ -91,7 +85,7 @@ describe("ReducerManager", () => {
 
   it("it can unregister tree reducers", () => {
     const reducerManager = new ReducerManager();
-    let initState = {};
+    const initState = {};
     let state;
 
     reducerManager.addReducersTree(reducersTree1, reducersTree2, reducersTree3);
