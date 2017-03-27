@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReducerManager it can register multiple tree reducers 1`] = `
+Object {
+  "counters": Object {
+    "Awesome": Object {
+      "StateFor": Object {
+        "Counter3": undefined,
+      },
+    },
+    "AwesomeStateForCounter1": 12,
+    "AwesomeStateForCounter2": 24,
+  },
+}
+`;
+
+exports[`ReducerManager it can register multiple tree reducers 2`] = `
+Object {
+  "counters": Object {
+    "Awesome": Object {
+      "StateFor": Object {
+        "Counter3": undefined,
+      },
+    },
+    "AwesomeStateForCounter1": 12,
+    "AwesomeStateForCounter2": 26,
+  },
+}
+`;
+
+exports[`ReducerManager it can register multiple tree reducers 3`] = `
+Object {
+  "counters": Object {
+    "Awesome": Object {
+      "StateFor": Object {
+        "Counter3": 36,
+      },
+    },
+    "AwesomeStateForCounter1": 12,
+    "AwesomeStateForCounter2": 28,
+  },
+}
+`;
+
+exports[`ReducerManager it can unregister tree reducers 1`] = `
+Object {
+  "counters": Object {
+    "Awesome": Object {
+      "StateFor": Object {
+        "Counter3": undefined,
+      },
+    },
+    "AwesomeStateForCounter1": 12,
+    "AwesomeStateForCounter2": 24,
+  },
+}
+`;
+
+exports[`should not have change after action 1 1`] = `
+Object {
+  "counters": Object {
+    "Awesome": Object {
+      "StateFor": Object {
+        "Counter3": undefined,
+      },
+    },
+    "AwesomeStateForCounter1": 12,
+    "AwesomeStateForCounter2": 26,
+  },
+}
+`;
