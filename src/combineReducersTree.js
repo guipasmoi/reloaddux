@@ -1,8 +1,8 @@
 /* eslint no-param-reassign: "off" */
 import isArray from "lodash/isArray";
 import isPlainObject from "lodash/isPlainObject";
-import set from "lodash/set";
 import merge from "lodash/merge";
+import set from "lodash/set";
 
 function isValidNode(node) {
   return isPlainObject(node);

@@ -2,16 +2,22 @@
 import React, { Component } from "react";
 import { Connect } from "react-redux";
 
-export default function(business) {
-  const shouldUseConnect = typeof business.mapDispatchToProps === "function" ||
-    typeof business.mapStateToProps === "object";
-  const shouldUseBusiness = business.sagas.length > 0 ||
-    business.reducerTrees.length > 0;
+export default function(business = {}) {
+  const {
+    sagas = [],
+    reducerTrees = [],
+    mapStateToProps,
+    mapDispatchToProps
+  } = business;
 
-  const connector = Connect(
-    business.mapStateToProps,
-    business.mapDispatchToProps
-  );
+  const shouldUseConnect = typeof mapDispatchToProps === "function" ||
+    typeof mapStateToProps === "object";
+  const shouldUseBusiness = sagas.length > 0 || reducerTrees.length > 0;
+
+  // connector is used only when shouldUseBusiness
+  const connector = shouldUseBusiness
+    ? Connect(mapStateToProps, mapDispatchToProps)
+    : null;
 
   return ComponentToWrapped => {
     if (!shouldUseBusiness && !shouldUseConnect) {

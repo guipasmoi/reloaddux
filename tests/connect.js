@@ -1,8 +1,14 @@
 /* eslint-disable*/
+import React, { Component } from "react";
+import TestUtils from "react-addons-test-utils";
+import { Provider } from "react-redux";
 import { put } from "redux-saga";
+import { connect, Store } from "../src/index";
+import { jsdom } from "jsdom";
 
-import React from "react";
-import { connect } from "../src/index";
+global.document = jsdom("<!doctype html><html><body></body></html>");
+global.window = document.defaultView;
+global.navigator = global.window.navigator;
 
 const counter1 = (state = 11) => state + 1;
 
@@ -12,6 +18,22 @@ const reducersTree = {
     reducer: counter1
   }
 };
+
+class App extends Component {
+  render() {
+    const { children, setLocation } = this.props;
+
+    /* eslint-disable react/jsx-no-bind */
+    return (
+      <div>
+        <a href="#">A</a>
+        <a href="#">B</a>
+      </div>
+    );
+  }
+
+  /* eslint-enable react/jsx-no-bind */
+}
 
 function action1(param) {
   return { type: "ACTION1", param };
@@ -29,12 +51,22 @@ const business = {
 };
 
 describe("connect", () => {
-  it("it doesn't throw exception", () => {
-    //   const store = new Store();
-    //
-    //   const H1Connected = connect(<h1 />);
-    //   <Provider store={store}>
-    //     <H1WithBusiness />
-    //   </Provider>;
+  it("provider should provide a store to connected component", () => {
+    const store = new Store();
+    const business = { mapStateToProps: state => state };
+
+    const connector = connect(business);
+    const AppWithBusiness = connector(App);
+    const tree = TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <AppWithBusiness pass="through" />
+      </Provider>
+    );
+    const appWithBusiness = TestUtils.findRenderedComponentWithType(
+      tree,
+      AppWithBusiness
+    );
+
+    expect(appWithBusiness.context.store).toBe(store);
   });
 });
