@@ -46,17 +46,17 @@ function* saga() {
 const business = {
   reducerTrees: [reducersTree],
   sagas: [saga],
-  mapStateToProps: undefined,
+  mapStateToProps: state => state,
   mapDispatchToProps: { action1 }
 };
 
 describe("connect", () => {
   it("provider should provide a store to connected component", () => {
     const store = new Store();
-    const business = { mapStateToProps: state => state };
+    //const business = { mapStateToProps: state => state };
 
-    const connector = connect(business);
-    const AppWithBusiness = connector(App);
+    const AppWithBusiness = connect(business)(App);
+    //const AppWithBusiness = connector(App);
     const tree = TestUtils.renderIntoDocument(
       <Provider store={store}>
         <AppWithBusiness pass="through" />

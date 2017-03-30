@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import React, { Component } from "react";
-import { Connect } from "react-redux";
+import { connect } from "react-redux";
 
 export default function(business = {}) {
   const {
@@ -11,12 +11,12 @@ export default function(business = {}) {
   } = business;
 
   const shouldUseConnect = typeof mapDispatchToProps === "function" ||
-    typeof mapStateToProps === "object";
+    typeof mapStateToProps === "function";
   const shouldUseBusiness = sagas.length > 0 || reducerTrees.length > 0;
 
   // connector is used only when shouldUseBusiness
-  const connector = shouldUseBusiness
-    ? Connect(mapStateToProps, mapDispatchToProps)
+  const connector = shouldUseConnect
+    ? connect(mapStateToProps, mapDispatchToProps)
     : null;
 
   return ComponentToWrapped => {
