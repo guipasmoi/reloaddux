@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import TestUtils from "react-addons-test-utils";
 import { Provider } from "react-redux";
-import { put } from "redux-saga";
+import { put } from "redux-saga/effects";
 import { connect, Store } from "../src/index";
 import { jsdom } from "jsdom";
 
@@ -44,7 +44,7 @@ function* saga() {
 }
 
 const business = {
-  reducerTrees: [reducersTree],
+  reducersTrees: [reducersTree],
   sagas: [saga],
   mapStateToProps: state => state,
   mapDispatchToProps: { action1 }
