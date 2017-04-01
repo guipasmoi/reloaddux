@@ -1,5 +1,6 @@
 /* eslint-disable*/
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import TestUtils from "react-addons-test-utils";
 import { Provider } from "react-redux";
 import { put } from "redux-saga/effects";
@@ -68,5 +69,29 @@ describe("connect", () => {
     );
 
     expect(appWithBusiness.context.store).toBe(store);
+  });
+
+  it("should subscribe before mounting and unsubscribe unmounting", () => {
+    const store = new Store();
+    const AppWithBusiness = connect(business)(App);
+    const spyRegister = jest.spyOn(store, "registerBusiness");
+    const spyUnregister = jest.spyOn(store, "unregisterBusiness");
+
+    //const AppWithBusiness = connector(App);
+    const tree = TestUtils.renderIntoDocument(
+      <Provider store={store}>
+        <AppWithBusiness pass="through" />
+      </Provider>
+    );
+    const appWithBusiness = TestUtils.findRenderedComponentWithType(
+      tree,
+      AppWithBusiness
+    );
+
+    expect(spyRegister).toHaveBeenCalledTimes(1);
+    expect(spyUnregister).toHaveBeenCalledTimes(0);
+    ReactDOM.unmountComponentAtNode(appWithBusiness);
+    expect(spyRegister).toHaveBeenCalledTimes(1);
+    expect(spyUnregister).toHaveBeenCalledTimes(1);
   });
 });
