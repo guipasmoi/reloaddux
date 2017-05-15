@@ -35,7 +35,7 @@ export default function combineReducersTree(
 
   let hasBeenInitialized = false;
 
-  function reverseTree(subTree, scope = "") {
+  (function reverseTree(subTree, scope = "") {
     Object.entries(subTree).forEach(([key, node]) => {
       if (isLeaf(subTree)) {
         if (subTree.actions) {
@@ -52,9 +52,8 @@ export default function combineReducersTree(
         reverseTree(node, scope.length === 0 ? key : `${scope}.${key}`);
       }
     });
-  }
-
-  reverseTree(tree);
+  })(tree);
+  
   // return reversedTree;
   function recursiveProcess(state, action, task) {
     if (isLeaf(task)) {
