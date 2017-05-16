@@ -1,7 +1,9 @@
 // redux
 import { applyMiddleware, compose, createStore } from "redux";
-import createSagaMiddleware from "redux-saga";
+import createSagaMiddleware, { runSaga, END } from "redux-saga";
+import { SAGA_ACTION } from "redux-saga/utils";
 import ReducerManager from "./ReducerManager";
+import { initAction } from "./combineReducersTree";
 // import { composeWithDevTools } from 'remote-redux-devtools';
 
 export const defaultOptions = {
@@ -31,7 +33,7 @@ export default class Store {
     //   });
 
     // eslint-disable-next-line no-unused-vars
-    let store = createStore(
+    const store = createStore(
       reducerManager.reducer,
       preloadedState,
       compose(
@@ -40,22 +42,45 @@ export default class Store {
       )
     );
 
+    const listeners = new Map();
+    const IO = {
+      subscribe: cb => {
+        const token = {};
+        listeners.set(token, action => {
+          console.log(action.type);
+          return cb(action);
+        });
+        return () => listeners.delete(token);
+      },
+      dispatch: action => {
+        store.dispatch(action);
+        listeners.forEach(cb => cb(action));
+        return action;
+      },
+      getState: (...args) => {
+        return this.getState(...args);
+      }
+    };
+
     /*  TODO
      if (isDebuggingInChrome) {
      window.store = store;
      }
      */
     // the current instance become the store we just created (we added run saga fct)
-    store = Object.assign(this, store, {
+    Object.assign(this, store, {
       run: sagaMiddleware.run,
-      reducerManager
+      reducerManager,
+      IO,
+      dispatch: IO.dispatch
     });
   }
 
   registerBusiness(business) {
-    this.reducerManager.addReducersTrees(...business.reducersTrees);
-    business.sagas.forEach(saga =>
-      this.sagaTotasksMap.set(saga, this.run(saga)));
+    this.reducerManager.addReducersTrees(business.reducersTree);
+    for (const [key, saga] of Object.entries(business.sagasMap)) {
+      this.sagaTotasksMap.set(key, runSaga(saga, this.IO));
+    }
   }
 
   unregisterBusiness(business) {
@@ -63,3 +88,43 @@ export default class Store {
     business.sagas.forEach(saga => this.sagaTotasksMap.delete(this.run(saga)));
   }
 }
+
+/*
+ import { is, check, uid as nextSagaId, wrapSagaDispatch } from './utils'
+ import proc from './proc'
+
+ export function runSaga(
+ iterator,
+ {
+ subscribe,
+ dispatch,
+ getState,
+ sagaMonitor,
+ logger,
+ onError
+ }
+ ) {
+
+ check(iterator, is.iterator, "runSaga must be called on an iterator")
+
+ const effectId = nextSagaId()
+ if(sagaMonitor) {
+ sagaMonitor.effectTriggered({effectId, root: true, parentEffectId: 0, effect: {root: true, saga: iterator, args:[]}})
+ }
+ const task = proc(
+ iterator,
+ subscribe,
+ wrapSagaDispatch(dispatch),
+ getState,
+ {sagaMonitor, logger, onError},
+ effectId,
+ iterator.name
+ )
+
+ if(sagaMonitor) {
+ sagaMonitor.effectResolved(effectId, task)
+ }
+
+ return task
+ }
+ */

@@ -24,6 +24,8 @@ function isLeaf(node) {
     typeof node.reducer === "function";
 }
 
+export const initAction = { type: "@@redux/INIT" };
+
 export default function combineReducersTree(
   tree,
   initAction = { type: "@@redux/INIT" }

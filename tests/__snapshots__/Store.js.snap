@@ -2,6 +2,11 @@
 
 exports[`Store it can create a store 1`] = `
 Store {
+  "IO": Object {
+    "dispatch": [Function],
+    "getState": [Function],
+    "subscribe": [Function],
+  },
   "dispatch": [Function],
   "getState": [Function],
   "reducerManager": ReducerManager {
@@ -15,5 +20,39 @@ Store {
   "sagaTotasksMap": Array [],
   "subscribe": [Function],
   Symbol(Symbol.observable): [Function],
+}
+`;
+
+exports[`Store it can create store and dispatch action 1`] = `Object {}`;
+
+exports[`Store it can create store and dispatch action 2`] = `Object {}`;
+
+exports[`Store it can create store and dispatch action 3`] = `
+Object {
+  "AwesomeStateForCounter1": 12,
+}
+`;
+
+exports[`Store it can create store and dispatch action 4`] = `
+Object {
+  "AwesomeStateForCounter1": 12,
+}
+`;
+
+exports[`Store it can create store and dispatch action 5`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": undefined,
+  },
+  "AwesomeStateForCounter1": 13,
+}
+`;
+
+exports[`Store it can create store and dispatch action 6`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": undefined,
+  },
+  "AwesomeStateForCounter1": 14,
 }
 `;
