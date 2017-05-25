@@ -1,5 +1,55 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`1 action but no business 1`] = `Object {}`;
+
+exports[`2 register first business 1`] = `
+Object {
+  "AwesomeStateForCounter1": 11,
+}
+`;
+
+exports[`3 dispatch action 1`] = `
+Object {
+  "AwesomeStateForCounter1": 12,
+}
+`;
+
+exports[`4 register second business 1`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": 12,
+  },
+  "AwesomeStateForCounter1": 12,
+}
+`;
+
+exports[`5 dispatch action 1`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": 12,
+  },
+  "AwesomeStateForCounter1": 13,
+}
+`;
+
+exports[`6 dispatch action 2 1`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": 14,
+  },
+  "AwesomeStateForCounter1": 13,
+}
+`;
+
+exports[`7 dispatch action 2 1`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": 14,
+  },
+  "AwesomeStateForCounter1": 14,
+}
+`;
+
 exports[`Store it can create a store 1`] = `
 Store {
   "IO": Object {
@@ -20,39 +70,5 @@ Store {
   "sagaTotasksMap": Array [],
   "subscribe": [Function],
   Symbol(Symbol.observable): [Function],
-}
-`;
-
-exports[`Store it can create store and dispatch action 1`] = `Object {}`;
-
-exports[`Store it can create store and dispatch action 2`] = `Object {}`;
-
-exports[`Store it can create store and dispatch action 3`] = `
-Object {
-  "AwesomeStateForCounter1": 12,
-}
-`;
-
-exports[`Store it can create store and dispatch action 4`] = `
-Object {
-  "AwesomeStateForCounter1": 12,
-}
-`;
-
-exports[`Store it can create store and dispatch action 5`] = `
-Object {
-  "Awesome": Object {
-    "StateForCounter2": undefined,
-  },
-  "AwesomeStateForCounter1": 13,
-}
-`;
-
-exports[`Store it can create store and dispatch action 6`] = `
-Object {
-  "Awesome": Object {
-    "StateForCounter2": undefined,
-  },
-  "AwesomeStateForCounter1": 14,
 }
 `;

@@ -81,6 +81,7 @@ export default class Store {
     for (const [key, saga] of Object.entries(business.sagasMap)) {
       this.sagaTotasksMap.set(key, runSaga(saga, this.IO));
     }
+    this.dispatch(initAction);
   }
 
   unregisterBusiness(business) {
