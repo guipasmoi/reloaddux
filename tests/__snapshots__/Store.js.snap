@@ -2,7 +2,15 @@
 
 exports[`1 action but no business 1`] = `Object {}`;
 
+exports[`1 action but no business 2`] = `Object {}`;
+
 exports[`2 register first business 1`] = `
+Object {
+  "AwesomeStateForCounter1": 11,
+}
+`;
+
+exports[`2 register first business 2`] = `
 Object {
   "AwesomeStateForCounter1": 11,
 }
@@ -11,6 +19,12 @@ Object {
 exports[`3 dispatch action 1`] = `
 Object {
   "AwesomeStateForCounter1": 12,
+}
+`;
+
+exports[`3BIS dispatch action 1`] = `
+Object {
+  "AwesomeStateForCounter1": 14,
 }
 `;
 

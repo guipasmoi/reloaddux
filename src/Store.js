@@ -1,9 +1,10 @@
 // redux
 import { applyMiddleware, compose, createStore } from "redux";
-import createSagaMiddleware, { runSaga, END } from "redux-saga";
-import { SAGA_ACTION } from "redux-saga/utils";
+import createSagaMiddleware, { runSaga } from "redux-saga";
 import ReducerManager from "./ReducerManager";
 import { initAction } from "./combineReducersTree";
+import { isBatchAction, wrapReducer } from "./batch";
+
 // import { composeWithDevTools } from 'remote-redux-devtools';
 
 export const defaultOptions = {
@@ -34,7 +35,7 @@ export default class Store {
 
     // eslint-disable-next-line no-unused-vars
     const store = createStore(
-      reducerManager.reducer,
+      wrapReducer(reducerManager.reducer),
       preloadedState,
       compose(
         applyMiddleware(...middleware)
@@ -47,19 +48,22 @@ export default class Store {
       subscribe: cb => {
         const token = {};
         listeners.set(token, action => {
-          console.log(action.type);
           return cb(action);
         });
         return () => listeners.delete(token);
       },
       dispatch: action => {
         store.dispatch(action);
-        listeners.forEach(cb => cb(action));
-        return action;
+        const NotifyReduxSaga = a => {
+          listeners.forEach(cb => cb(a));
+        };
+        if (isBatchAction(action)) {
+          action.actions.forEach(NotifyReduxSaga);
+          // todo add mecanism to notify each action at each stef not after all step
+        }
+        NotifyReduxSaga(action);
       },
-      getState: (...args) => {
-        return this.getState(...args);
-      }
+      getState: (...args) => this.getState(...args)
     };
 
     /*  TODO

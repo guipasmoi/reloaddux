@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { put, take } from "redux-saga/effects";
-import { connect, Store } from "../src/index";
+import { connect, Store, createBatch } from "../src/index";
 
 const counter1 = state => state + 1;
 const counter2 = state => state + 2;
@@ -58,6 +58,28 @@ describe("Store", () => {
   it("it can create a store", () => {
     const store = new Store();
     expect(store).toMatchSnapshot();
+  });
+
+  it("it can batch action", () => {
+    const store = new Store();
+    store.dispatch({ type: ACTION1 });
+    expect(store.getState()).toMatchSnapshot("1 action but no business");
+
+    // 2
+    // store.registerBusiness(business1);
+    store.registerBusiness(business1);
+    expect(store.getState()).toMatchSnapshot("2 register first business");
+
+    // 3 BIS
+    store.dispatch(
+      createBatch(
+        "ACTION1X3",
+        { type: ACTION1 },
+        { type: ACTION1 },
+        { type: ACTION1 }
+      )
+    );
+    expect(store.getState()).toMatchSnapshot("3BIS dispatch action");
   });
 
   it("it can create store and dispatch action", () => {
