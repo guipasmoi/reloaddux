@@ -16,10 +16,20 @@ export function createBatch(type, ...actions) {
 }
 
 export function wrapReducer(reducer) {
-  return (state, action) => {
+  const wrappedReducer = (state, action) => {
     if (isBatchAction(action)) {
-      return action.actions.reduce(reducer, state);
+      return action.actions.reduce(wrappedReducer, state);
     }
     return reducer(state, action);
+  };
+  return wrappedReducer;
+}
+
+export function wrapCallBackNotification(cb) {
+  return function wrappedCb(action) {
+    if (isBatchAction(action)) {
+      action.actions.forEach(wrapCallBackNotification(cb));
+    }
+    cb(action);
   };
 }
