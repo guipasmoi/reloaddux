@@ -3,7 +3,7 @@ import { applyMiddleware, compose, createStore } from "redux";
 import createSagaMiddleware, { runSaga } from "redux-saga";
 import ReducerManager from "./ReducerManager";
 import { initAction } from "./combineReducersTree";
-import { isBatchAction, wrapReducer } from "./batch";
+import { wrapReducer, wrapCallBackNotification } from "./batch";
 
 // import { composeWithDevTools } from 'remote-redux-devtools';
 
@@ -44,6 +44,8 @@ export default class Store {
     );
 
     const listeners = new Map();
+    const notifyAll = action =>
+      listeners.forEach(cb => wrapCallBackNotification(cb)(action));
     const IO = {
       subscribe: cb => {
         const token = {};
@@ -54,16 +56,11 @@ export default class Store {
       },
       dispatch: action => {
         store.dispatch(action);
-        const NotifyReduxSaga = a => {
-          listeners.forEach(cb => cb(a));
-        };
-        if (isBatchAction(action)) {
-          action.actions.forEach(NotifyReduxSaga);
-          // todo add mecanism to notify each action at each stef not after all step
-        }
-        NotifyReduxSaga(action);
+        notifyAll(action);
       },
-      getState: (...args) => this.getState(...args)
+      getState: (...args) => {
+        return this.getState(...args);
+      }
     };
 
     /*  TODO

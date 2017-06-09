@@ -45,7 +45,7 @@ function* saga() {
 }
 
 const business = {
-  reducersTree: reducersTree,
+  mapReducersTree: location => reducersTree,
   sagasMap: {
     saga1: saga(),
     saga2: saga("toto"),

@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`2 register first business 1`] = `
+Object {
+  "AwesomeStateForCounter1": Array [],
+}
+`;
+
+exports[`Store it can batch action 1`] = `
+Array [
+  "@@redux/INIT",
+  "ACTION1",
+  "ACTION1",
+  "ACTION1X2",
+  "ACTION1",
+  "ACTION1",
+  "ACTION1X2",
+  "ACTION1X2X2",
+]
+`;
+
+exports[`Store it can batch action 2`] = `
+Object {
+  "AwesomeStateForCounter1": Array [
+    Object {
+      "type": "ACTION1",
+    },
+    Object {
+      "type": "ACTION1",
+    },
+    Object {
+      "type": "ACTION1",
+    },
+    Object {
+      "type": "ACTION1",
+    },
+  ],
+}
+`;
