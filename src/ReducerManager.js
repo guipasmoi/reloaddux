@@ -1,6 +1,6 @@
 import merge from "lodash/merge";
-import without from "lodash/without";
 import uniq from "lodash/uniq";
+import without from "lodash/without";
 import combineReducersTree from "./combineReducersTree";
 
 export default class ReducerManager {

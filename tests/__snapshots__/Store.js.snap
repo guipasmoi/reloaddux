@@ -1,7 +1,76 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`1 action but no business 1`] = `Object {}`;
+
+exports[`1 action but no business 2`] = `Object {}`;
+
+exports[`2 register first business 1`] = `
+Object {
+  "AwesomeStateForCounter1": 11,
+}
+`;
+
+exports[`2 register first business 2`] = `
+Object {
+  "AwesomeStateForCounter1": 11,
+}
+`;
+
+exports[`3 dispatch action 1`] = `
+Object {
+  "AwesomeStateForCounter1": 12,
+}
+`;
+
+exports[`3BIS dispatch action 1`] = `
+Object {
+  "AwesomeStateForCounter1": 14,
+}
+`;
+
+exports[`4 register second business 1`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": 12,
+  },
+  "AwesomeStateForCounter1": 12,
+}
+`;
+
+exports[`5 dispatch action 1`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": 12,
+  },
+  "AwesomeStateForCounter1": 13,
+}
+`;
+
+exports[`6 dispatch action 2 1`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": 14,
+  },
+  "AwesomeStateForCounter1": 13,
+}
+`;
+
+exports[`7 dispatch action 2 1`] = `
+Object {
+  "Awesome": Object {
+    "StateForCounter2": 14,
+  },
+  "AwesomeStateForCounter1": 14,
+}
+`;
+
 exports[`Store it can create a store 1`] = `
 Store {
+  "IO": Object {
+    "dispatch": [Function],
+    "getState": [Function],
+    "subscribe": [Function],
+  },
   "dispatch": [Function],
   "getState": [Function],
   "reducerManager": ReducerManager {
