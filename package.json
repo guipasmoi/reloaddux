@@ -1,5 +1,5 @@
 {
-  "name": "reloadux",
+  "name": "reloaddux",
   "version": "0.0.2",
   "description": "My node module",
   "license": "MIT",
@@ -15,7 +15,7 @@
     "test": "jest",
     "coverage": "npm test -- --coverage",
     "postcoverage": "opn coverage/lcov-report/index.html",
-    "lint": "eslint src tests",
+    "lint": "eslint toto",
     "flow": "flow check",
     "docs": "documentation readme src --section=API",
     "clean": "rimraf dist",

@@ -49,18 +49,14 @@ export default class Store {
     const IO = {
       subscribe: cb => {
         const token = {};
-        listeners.set(token, action => {
-          return cb(action);
-        });
+        listeners.set(token, action => cb(action));
         return () => listeners.delete(token);
       },
       dispatch: action => {
         store.dispatch(action);
         notifyAll(action);
       },
-      getState: (...args) => {
-        return this.getState(...args);
-      }
+      getState: (...args) => this.getState(...args)
     };
 
     /*  TODO

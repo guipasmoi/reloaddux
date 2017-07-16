@@ -49,7 +49,7 @@ const business1 = doSomething => ({
 const business2 = {
   reducersTree: reducersTree2,
   sagasMap: {
-    saga2: saga2
+    saga2
   }
 };
 
@@ -57,7 +57,7 @@ describe("Store", () => {
   it("it can batch action", () => {
     const store = new Store();
 
-    let takeOnSaga = [];
+    const takeOnSaga = [];
     store.registerBusiness(
       business1(action => {
         takeOnSaga.push(action.type);
