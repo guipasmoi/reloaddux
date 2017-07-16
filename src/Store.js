@@ -86,7 +86,7 @@ export default class Store {
   }
 
   unregisterBusiness(business) {
-    this.reducerManager.removeReducersTrees(...business.reducersTrees);
+    this.reducerManager.removeReducersTree(...business.reducersTree);
     business.sagas.forEach(saga => this.sagaTotasksMap.delete(this.run(saga)));
   }
 }
