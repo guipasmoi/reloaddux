@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`1 action but no business 1`] = `Object {}`;
+exports[`1 action but no business 1`] = `undefined`;
 
-exports[`1 action but no business 2`] = `Object {}`;
+exports[`1 action but no business 2`] = `undefined`;
 
 exports[`2 register first business 1`] = `
 Object {
