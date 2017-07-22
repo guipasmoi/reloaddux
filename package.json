@@ -1,6 +1,6 @@
 {
   "name": "reloaddux",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "My node module",
   "license": "MIT",
   "main": "index.js",
