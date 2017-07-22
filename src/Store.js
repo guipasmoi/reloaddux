@@ -56,7 +56,7 @@ export default class Store {
         store.dispatch(action);
         notifyAll(action);
       },
-      getState: (...args) => this.getState(...args)
+      getState: (...args) => store.getState(...args)
     };
 
     /*  TODO
