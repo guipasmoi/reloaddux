@@ -15,7 +15,7 @@ export const defaultOptions = {
 export default class Store {
   constructor(
     {
-      preloadedState = {},
+      preloadedState,
       sagaMonitor
     } = defaultOptions
   ) {
