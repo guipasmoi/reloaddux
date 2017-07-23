@@ -24,14 +24,6 @@ export default class Store {
 
     const reducerManager = new ReducerManager();
     this.sagaTotasksMap = new Map();
-    // const composeEnhancers = composeWithDevTools(
-    //   {
-    //     name: 'configuration agent',
-    //     hostname: 'localhost',
-    //     maxAge: 20,
-    //     realtime: true,
-    //     port: 8000,
-    //   });
 
     // eslint-disable-next-line no-unused-vars
     const store = createStore(
@@ -59,11 +51,6 @@ export default class Store {
       getState: (...args) => store.getState(...args)
     };
 
-    /*  TODO
-     if (isDebuggingInChrome) {
-     window.store = store;
-     }
-     */
     // the current instance become the store we just created (we added run saga fct)
     Object.assign(this, store, {
       run: sagaMiddleware.run,
@@ -87,43 +74,3 @@ export default class Store {
       this.sagaTotasksMap.delete(this.run(saga)));
   }
 }
-
-/*
- import { is, check, uid as nextSagaId, wrapSagaDispatch } from './utils'
- import proc from './proc'
-
- export function runSaga(
- iterator,
- {
- subscribe,
- dispatch,
- getState,
- sagaMonitor,
- logger,
- onError
- }
- ) {
-
- check(iterator, is.iterator, "runSaga must be called on an iterator")
-
- const effectId = nextSagaId()
- if(sagaMonitor) {
- sagaMonitor.effectTriggered({effectId, root: true, parentEffectId: 0, effect: {root: true, saga: iterator, args:[]}})
- }
- const task = proc(
- iterator,
- subscribe,
- wrapSagaDispatch(dispatch),
- getState,
- {sagaMonitor, logger, onError},
- effectId,
- iterator.name
- )
-
- if(sagaMonitor) {
- sagaMonitor.effectResolved(effectId, task)
- }
-
- return task
- }
- */

@@ -38,26 +38,30 @@ export default function combineReducersTree(
   let hasBeenInitialized = false;
 
   function reverseTree(subTree, scope = "") {
-    Object.entries(subTree).forEach(([key, node]) => {
-      if (isLeaf(subTree)) {
-        if (subTree.actions) {
-          subTree.actions.forEach(action => {
-            if (reversedTree[action] === undefined) {
-              reversedTree[action] = {};
-            }
-            set(reversedTree[action], scope, subTree);
-          });
-        } else {
-          set(reversedTree["*"], scope, subTree);
-        }
-      } else if (isValidNode(subTree)) {
-        reverseTree(node, scope.length === 0 ? key : `${scope}.${key}`);
+    if (isLeaf(subTree)) {
+      if (scope === "") {
+        reversedTree[subTree.action] = subTree;
+        return;
       }
-    });
+      if (subTree.actions) {
+        subTree.actions.forEach(action => {
+          if (reversedTree[action] === undefined) {
+            reversedTree[action] = {};
+          }
+          set(reversedTree[action], scope, subTree);
+        });
+      } else {
+        set(reversedTree["*"], scope, subTree);
+      }
+    } else if (isValidNode(subTree)) {
+      Object.entries(subTree).forEach(([key, node]) => {
+        reverseTree(node, scope.length === 0 ? key : `${scope}.${key}`);
+      });
+    }
   }
 
   reverseTree(tree);
-  // return reversedTree;
+
   function recursiveProcess(state, action, task) {
     if (isLeaf(task)) {
       if (action.type === initAction.type) {
