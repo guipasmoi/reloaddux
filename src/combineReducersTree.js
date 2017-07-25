@@ -37,6 +37,7 @@ export default function combineReducersTree(
 
   let hasBeenInitialized = false;
 
+  // TODO redo reverse tree
   function reverseTree(subTree, scope = "") {
     if (isLeaf(subTree)) {
       if (subTree.actions) {
