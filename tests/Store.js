@@ -43,14 +43,14 @@ function* saga2() {
 const business1 = {
   reducersTree: reducersTree1,
   sagasMap: {
-    saga1: saga1()
+    saga1: saga1
   }
 };
 
 const business2 = {
   reducersTree: reducersTree2,
   sagasMap: {
-    saga2: saga2()
+    saga2: saga2
   }
 };
 
