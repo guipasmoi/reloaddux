@@ -39,10 +39,6 @@ export default function combineReducersTree(
 
   function reverseTree(subTree, scope = "") {
     if (isLeaf(subTree)) {
-      if (scope === "") {
-        reversedTree[subTree.action] = subTree;
-        return;
-      }
       if (subTree.actions) {
         subTree.actions.forEach(action => {
           if (reversedTree[action] === undefined) {
@@ -61,6 +57,9 @@ export default function combineReducersTree(
   }
 
   reverseTree(tree);
+  if (isLeaf(tree)) {
+    reversedTree["*"] = tree;
+  }
 
   function recursiveProcess(state, action, task) {
     if (isLeaf(task)) {
