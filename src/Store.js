@@ -63,7 +63,7 @@ export default class Store {
   registerBusiness(business) {
     this.reducerManager.addReducersTrees(business.reducersTree);
     for (const [key, saga] of Object.entries(business.sagasMap)) {
-      this.sagaTotasksMap.set(key, runSaga(saga, this.IO));
+      this.sagaTotasksMap.set(key, runSaga(saga(), this.IO));
     }
     this.dispatch(initAction);
   }
