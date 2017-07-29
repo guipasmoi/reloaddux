@@ -30,10 +30,6 @@ function action1(param) {
   return { type: ACTION1, param };
 }
 
-function* saga1(doSomething) {
-  yield takeEvery("*", doSomething);
-}
-
 function* saga2() {
   yield take(ACTION3);
   yield put(action1("some data awesome"));
@@ -42,7 +38,9 @@ function* saga2() {
 const business1 = doSomething => ({
   reducersTree: reducersTree1,
   sagasMap: {
-    saga1: saga1
+    saga1: function* saga1() {
+      yield takeEvery("*", doSomething);
+    }
   }
 });
 
@@ -57,9 +55,14 @@ const takeOnSaga = [];
 
 describe("Store", () => {
   it("it can batch action", () => {
-    /*
     const store = new Store();
 
+    const takeOnSaga = [];
+    store.registerBusiness(
+      business1(action => {
+        takeOnSaga.push(action.type);
+      })
+    );
     expect(store.getState()).toMatchSnapshot("2 register first business");
 
     const actionX2 = createBatch(
@@ -71,6 +74,5 @@ describe("Store", () => {
     store.dispatch(createBatch("ACTION1X2X2", actionX2, actionX2));
     expect(takeOnSaga).toMatchSnapshot();
     expect(store.getState()).toMatchSnapshot();
- */
   });
 });
