@@ -1,49 +1,15 @@
 /* eslint no-param-reassign: "off" */
 import merge from "lodash/merge";
-import set from "lodash/set";
-import isLeaf from "./utils/isLeaf";
-import isValidNode from "./utils/isValidNode";
 import isPlainObject from "lodash/isPlainObject";
+import isLeaf from "./utils/isLeaf";
+import reverseTree from "./utils/reverseTree";
 
 export const initAction = { type: "@@redux/INIT" };
 
-export default function combineReducersTree(
-  tree,
-  initAction = { type: "@@redux/INIT" }
-) {
-  const reversedTree = {
-    // action1: { scope1: reducer, scope2: reducer },
-    "*": {}
-  };
+export default function combineReducersTree(tree) {
+  const reversedTree = reverseTree(tree);
 
   let hasBeenInitialized = false;
-
-  // TODO redo reverse tree
-  function reverseTree(subTree, scope = "") {
-    if (isLeaf(subTree)) {
-      if (subTree.actions) {
-        subTree.actions.forEach(action => {
-          if (reversedTree[action] === undefined) {
-            reversedTree[action] = {};
-          }
-          set(reversedTree[action], scope, subTree);
-        });
-      } else {
-        set(reversedTree["*"], scope, subTree);
-      }
-    } else if (isValidNode(subTree)) {
-      Object.entries(subTree).forEach(([key, node]) => {
-        reverseTree(node, scope.length === 0 ? key : `${scope}.${key}`);
-      });
-    }
-  }
-
-  reverseTree(tree);
-
-  /* if (isLeaf(tree)) {
-    reversedTree["*"] = tree;
-  }
-*/
 
   function recursiveProcess(state, action, task) {
     if (isLeaf(task)) {
