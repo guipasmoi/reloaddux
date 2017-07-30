@@ -58,6 +58,18 @@ Object {
 }
 `;
 
+exports[`combineReducerTree It can handle root correctly 1`] = `
+Object {
+  "data": "some data after ACTION1",
+}
+`;
+
+exports[`combineReducerTree It can handle root correctly 2`] = `
+Object {
+  "data": "some data again after ACTION1",
+}
+`;
+
 exports[`combineReducerTree It can init state with init action 1`] = `
 Object {
   "common": Object {

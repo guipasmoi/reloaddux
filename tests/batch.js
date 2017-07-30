@@ -50,8 +50,6 @@ const business2 = {
     saga2
   }
 };
-// TODO fix beurk
-const takeOnSaga = [];
 
 describe("Store", () => {
   it("it can batch action", () => {

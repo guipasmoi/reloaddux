@@ -1,6 +1,6 @@
 import combineReducersTree from "../src/combineReducersTree";
 
-const data = {
+const reducerTree1 = {
   groceryManagement: {
     data: {
       groceries: {
@@ -41,6 +41,13 @@ const data = {
   }
 };
 
+const reducerTree2 = {
+  actions: ["ACTION1"],
+  reducer: (state, action) => ({
+    data: action.data
+  })
+};
+
 const initialState = {
   groceryManagement: {
     data: {
@@ -55,26 +62,26 @@ const initialState = {
 
 describe("combineReducerTree", () => {
   it("It can init state with init action", () => {
-    const a = combineReducersTree(data);
+    const a = combineReducersTree(reducerTree1);
     expect(a({}, { type: "@@redux/INIT" })).toMatchSnapshot();
   });
 
   it("It can dispatch a scpecific action", () => {
-    const a = combineReducersTree(data);
+    const a = combineReducersTree(reducerTree1);
     expect(
       a({}, { type: "ACTION1", data: "some data after ACTION1" })
     ).toMatchSnapshot();
   });
 
   it("It can dispatch a scpecific action with a previous state", () => {
-    const a = combineReducersTree(data);
+    const a = combineReducersTree(reducerTree1);
     expect(
       a(initialState, { type: "ACTION1", data: "some data after ACTION1" })
     ).toMatchSnapshot();
   });
 
   it("Previous state is not alterated by action and immutability principle are respected", () => {
-    const a = combineReducersTree(data);
+    const a = combineReducersTree(reducerTree1);
     const initialStateBefore = JSON.stringify(initialState);
     const newState = a(initialState, {
       type: "ACTION1",
@@ -95,5 +102,20 @@ describe("combineReducerTree", () => {
     );
     expect(initialState.groceryManagement).not.toBe(newState.groceryManagement);
     expect(initialState.basket).toBe(newState.basket);
+  });
+
+  it("It can handle root correctly", () => {
+    const a = combineReducersTree(reducerTree2);
+
+    let newState = a(initialState, {
+      type: "ACTION1",
+      data: "some data after ACTION1"
+    });
+    expect(newState).toMatchSnapshot();
+    newState = a(newState, {
+      type: "ACTION1",
+      data: "some data again after ACTION1"
+    });
+    expect(newState).toMatchSnapshot();
   });
 });

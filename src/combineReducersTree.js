@@ -1,28 +1,9 @@
 /* eslint no-param-reassign: "off" */
-import isArray from "lodash/isArray";
-import isPlainObject from "lodash/isPlainObject";
 import merge from "lodash/merge";
 import set from "lodash/set";
-
-function isValidNode(node) {
-  return isPlainObject(node);
-}
-
-function isActionsArray(actions) {
-  return actions === undefined ||
-    (isArray(actions) &&
-      actions.reduce(
-        (accu, action) => accu && typeof action === "string",
-        true
-      ));
-}
-
-function isLeaf(node) {
-  return node &&
-    typeof node === "object" &&
-    isActionsArray(node.actions) &&
-    typeof node.reducer === "function";
-}
+import isLeaf from "./utils/isLeaf";
+import isValidNode from "./utils/isValidNode";
+import isPlainObject from "lodash/isPlainObject";
 
 export const initAction = { type: "@@redux/INIT" };
 
@@ -58,9 +39,11 @@ export default function combineReducersTree(
   }
 
   reverseTree(tree);
-  if (isLeaf(tree)) {
+
+  /* if (isLeaf(tree)) {
     reversedTree["*"] = tree;
   }
+*/
 
   function recursiveProcess(state, action, task) {
     if (isLeaf(task)) {
