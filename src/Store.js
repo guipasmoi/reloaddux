@@ -5,22 +5,17 @@ import ReducerManager from "./ReducerManager";
 import { initAction } from "./combineReducersTree";
 import { wrapReducer, wrapCallBackNotification } from "./batch";
 
-// import { composeWithDevTools } from 'remote-redux-devtools';
-
-export const defaultOptions = {
-  rootReducer: (state = {}) => state,
-  startingSaga: []
-};
-
 export default class Store {
   constructor(
     {
       preloadedState,
-      sagaMonitor
-    } = defaultOptions
+      sagaMonitor,
+      middlewares = [],
+      composeEnhancer = compose
+    } = {}
   ) {
     const sagaMiddleware = createSagaMiddleware({ sagaMonitor });
-    const middleware = [sagaMiddleware];
+    const allMiddlewares = [sagaMiddleware, ...middlewares];
 
     const reducerManager = new ReducerManager();
     this.sagaTotasksMap = new Map();
@@ -29,8 +24,8 @@ export default class Store {
     const store = createStore(
       wrapReducer(reducerManager.reducer),
       preloadedState,
-      compose(
-        applyMiddleware(...middleware)
+      composeEnhancer(
+        applyMiddleware(...allMiddlewares)
         // other store enhancers if any
       )
     );
