@@ -14,7 +14,10 @@ export default function combineReducersTree(tree) {
   function recursiveProcess(state, action, task) {
     if (isLeaf(task)) {
       if (action.type === initAction.type) {
-        const newState = state === undefined ? task.default : state;
+        // eslint-disable-next-line no-nested-ternary
+        const newState = state === undefined
+          ? task.default ? task.default : task.reducer(state, action)
+          : state;
         return { value: newState, hasChanged: newState !== state };
       }
       if (
